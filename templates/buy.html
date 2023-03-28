@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Buy Stock
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('buy', stock_data_load=stock | tojson) }}" method="post">
+        <strong><h3>Buy {{ stock.symbol }}</h3></strong>
+        <hr>
+        <div class="mb-3">
+            <input autocomplete="off" class="form-control mx-auto w-auto" id="symbol" name="numShares" placeholder="0" type="number" min="1" oninput="validity.valid||(value='')">
+        </div>
+        <p class="stockPrice">Market Price: ${{ stock.price }}</p>
+        <p name="total" class="totalCost">Estimated Cost: $0.00</p>
+        <button class="btn btn-success" type="submit">Buy</button>
+    </form>
+    <br>
+    <script>
+        // oninput="validity.valid||(value='') -- this function does not allow negative numbers to be input
+        let totalShare = document.querySelector("#symbol")
+        console.log(totalShare)
+
+        totalShare.addEventListener('input', async function() {
+            let stockPrice = parseFloat('{{ stock.price | tojson }}')
+            let totalCost = parseFloat((Math.round(parseFloat(totalShare.value) * stockPrice * 100) / 100).toFixed(2))
+
+            const finalPrice = (totalCost).toLocaleString('en-US',{
+                style: 'currency',
+                currency: 'USD'
+            });
+
+            if (totalCost){
+                document.querySelector('.totalCost').innerHTML = `Estimated Cost: ${finalPrice}`
+            } else{
+                document.querySelector('.totalCost').innerHTML = `Estimated Cost: $0.00`
+            }
+
+
+        })
+
+    </script>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Portfolio
+{% endblock %}
+
+{% block main %}
+    <h1>Welcome, {{ name }}</h1>
+    <div class="container">
+        <div class="section">
+
+            <h2>Total Investments: ${{ "%0.2f"| format(total) }}</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Quantity</th>
+                        <th>Last Price</th>
+                        <th>Current Value</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TODO: Loop through the database entries to display them in this table -->
+                    {% for stock in portfolio %}
+                    <tr>
+                        <td>{{ stock.symbol }}</td>
+                        <td>{{ stock.quantity }}</td>
+                        <td>$ {{ "%0.2f" | format(stock.price) }}</td>
+                        <td>$ {{ "%0.2f" | format(stock.value) }}</td>
+                        <td><a href="{{ url_for('quote', stock_data_load=stock | tojson) }}"><button type="button" class="btn btn-success">Buy</button></a>
+                            <a href="{{ url_for('sell' , stock_data_load=stock | tojson) }}"><button type="button" class="btn btn-danger">Sell</button></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

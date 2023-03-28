@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}
+    Quote Stock Price
+{% endblock %}
+
+{% block main %}
+    <form action="{{ url_for('quote') }}" method="post">
+        <strong><h3>Quote Stock</h3></strong>
+        <hr>
+        <div class="mb-3">
+            <input autocomplete="off" autofocus class="form-control mx-auto w-auto" id="symbol" name="symbol" placeholder="Search Symbol..." type="text">
+        </div>
+        <button class="btn btn-primary" type="submit">Quote</button>
+    </form>
+{% endblock %}

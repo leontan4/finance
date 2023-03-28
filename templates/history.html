@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        <div class="section">
+
+            <h2>Recent Transactions</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Actions</th>
+                        <th>Quantity</th>
+                        <th>Market Price</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TODO: Loop through the database entries to display them in this table -->
+                    {% for stock in transactions %}
+                    <tr>
+                        <td>{{ stock.symbol }}</td>
+                        <td>{% if stock.actions == "Sell" %}
+                            <button class="btn btn-danger">{{ stock.actions }}</button>
+                            {% else %}
+                            <button class="btn btn-success">{{ stock.actions }}</button>
+                            {% endif %}</td>
+                        <td>{{ stock.quantity }}</td>
+                        <td>$ {{ "%0.2f"|format(stock.price) }}</td>
+                        <td>$ {{ "%0.2f"|format(stock.value) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
