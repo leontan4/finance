@@ -80,7 +80,7 @@ def buy():
         totalCost = stockPrice * numShares
 
         if cash < totalCost:
-            return apology("TODO")
+            return apology("Insufficient fund.")
 
         # Query current portfolio associate with current user id
         portfolio = db.execute("SELECT * FROM investments WHERE user_id = ? AND symbol = ?", user_id, stock_symbol)
